@@ -1,6 +1,6 @@
-package Map.Second;
+package map.Second;
 
-import Map.Third.Situation;
+import map.Third.Situation;
 
 public class BigPoint extends Edible {
     private Situation situation;

@@ -1,4 +1,4 @@
-package Map.Third;
+package map.Third;
 
 public enum Difficulty {
     EASY,

@@ -1,4 +1,4 @@
-package Map.Second;
+package map.Second;
 
 import javax.swing.*;
 import java.awt.*;

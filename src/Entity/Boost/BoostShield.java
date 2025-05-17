@@ -2,24 +2,13 @@ package Entity.Boost;
 
 import Entity.Player;
 import Entity.ghosts.Ghost;
-import Map.Map;
-
-import javax.swing.*;
-import java.awt.*;
+import map.Map;
 
 public class BoostShield extends Boost {
     private static final long BOOST_DURATION_MS = 5000;
 
-    public BoostShield(int x, int y, int size, Map map, String imagePath) {
-        super(x, y, size, map, imagePath);
-        initializeIcon(imagePath, size);
-    }
-
-    private void initializeIcon(String imagePath, int size) {
-        ImageIcon image = new ImageIcon(imagePath);
-        Image resizedImage = image.getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH);
-        setIcon(new ImageIcon(resizedImage));
-        setBounds(getX(), getY(), size, size);
+    public BoostShield(int row, int col, int tileSize, Map map) {
+        super(row, col, tileSize, map);
     }
 
     @Override
@@ -34,6 +23,7 @@ public class BoostShield extends Boost {
                 Thread.currentThread().interrupt();
                 System.err.println("Boost timer interrupted: " + e.getMessage());
             }
+
             player.setImmortal(false);
             System.out.println("Shield Boost Finished");
             System.out.println("Player immortal status: " + player.getImmortal());

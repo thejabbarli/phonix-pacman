@@ -1,7 +1,7 @@
-package Map.Second;
+package map.Second;
 
-import Map.Map;
-import Map.Third.Situation;
+import map.Map;
+import map.Third.Situation;
 
 import javax.swing.*;
 import java.util.ArrayList;

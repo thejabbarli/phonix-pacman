@@ -1,4 +1,4 @@
-package Map;
+package map;
 
 import Main.MapLoader;
 
@@ -10,10 +10,19 @@ public class Map extends JPanel {
     private int tileSize = 50;
     private MapLoader mapLoader = new MapLoader();
 
+    // ✅ Constructor for dimension reading only (no GUI update)
     public Map(String mapFilePath, int tileSize) {
         this.tileSize = tileSize;
-        mapData = mapLoader.loadMapFromFile(mapFilePath);
-        mapLoader.setupMap(this, mapData, tileSize);
+        this.mapData = mapLoader.loadMapFromFile(mapFilePath); // just load, no update
+    }
+
+    // ✅ Full constructor with GUI update
+    public Map(String mapFilePath, int tileSize, BoardUpdater boardUpdater) {
+        this.tileSize = tileSize;
+        this.mapData = mapLoader.loadMapFromFile(mapFilePath);
+        if (boardUpdater != null) {
+            mapLoader.setupMap(boardUpdater, mapData);
+        }
     }
 
     public java.awt.Point findTopLeftOpenPosition() {
@@ -24,7 +33,7 @@ public class Map extends JPanel {
                 }
             }
         }
-        return new java.awt.Point(tileSize, tileSize); // Default fallback
+        return new java.awt.Point(tileSize, tileSize); // Fallback
     }
 
     public char[][] getMap() {

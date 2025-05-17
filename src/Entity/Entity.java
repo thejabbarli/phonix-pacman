@@ -1,39 +1,27 @@
 package Entity;
 
-import Map.Map;
+import map.Map;
 
-import javax.swing.*;
-import java.util.List;
-
-
-public abstract class Entity extends JLabel {
-
+public abstract class Entity {
     protected int entityX;
     protected int entityY;
     protected int entitySpeed;
-
     protected int tileSize;
 
     protected Map map;
-    protected AllDirections currentDirection;
+    protected AllDirections currentDirection = AllDirections.NULL;
 
-    private static final int ANIMATION_DELAY_MS = 100;
-    private Thread animationThread;
-
-    public Entity(int x, int y, int speed, String myImage) {
+    public Entity(int x, int y, int speed, Map map) {
         this.entityX = x;
         this.entityY = y;
         this.entitySpeed = speed;
-        this.tileSize = tileSize;
-
-        setBounds(x, y, tileSize, tileSize); // Set bounds for JLabel
-
+        this.map = map;
+        this.tileSize = map.getTileSize();
     }
 
     public void setPosition(int x, int y) {
         this.entityX = x;
         this.entityY = y;
-        setLocation(x, y);
     }
 
     public int getXCoordinate() {
@@ -44,22 +32,45 @@ public abstract class Entity extends JLabel {
         return entityY;
     }
 
-    public int getGhostSpeed() {
+    public int getSpeed() {
         return entitySpeed;
     }
 
+    public void setCurrentDirection(AllDirections direction) {
+        this.currentDirection = direction;
+    }
 
+    public AllDirections getCurrentDirection() {
+        return currentDirection;
+    }
 
-    public boolean checkCollisionWithMap(char[][] map, int x, int y) {
+    public void move() {
+        int nextX = entityX;
+        int nextY = entityY;
+
+        switch (currentDirection) {
+            case UP -> nextY -= entitySpeed;
+            case DOWN -> nextY += entitySpeed;
+            case LEFT -> nextX -= entitySpeed;
+            case RIGHT -> nextX += entitySpeed;
+            default -> {}
+        }
+
+        if (!checkCollisionWithMap(map.getMap(), nextX, nextY)) {
+            entityX = nextX;
+            entityY = nextY;
+        }
+    }
+
+    public boolean checkCollisionWithMap(char[][] mapData, int x, int y) {
         int tileX = x / tileSize;
         int tileY = y / tileSize;
 
-        // Check if the entity collides with walls on the map
-        if (tileX < 0 || tileX >= map[0].length || tileY < 0 || tileY >= map.length) {
+        if (tileX < 0 || tileX >= mapData[0].length || tileY < 0 || tileY >= mapData.length) {
             return true; // Out of bounds
         }
 
-        char tile = map[tileY][tileX];
+        char tile = mapData[tileY][tileX];
         return !isWalkable(tile);
     }
 
@@ -67,40 +78,7 @@ public abstract class Entity extends JLabel {
         return tile == 'o' || tile == 'O';
     }
 
-    public void move() {
-        int nextX = entityX;
-        int nextY = entityY;
-
-        // Calculate the next position based on the current direction
-        switch (currentDirection) {
-            case UP:
-                nextY = entityY - entitySpeed;
-                break;
-            case LEFT:
-                nextX = entityX - entitySpeed;
-                break;
-            case DOWN:
-                nextY = entityY + entitySpeed;
-                break;
-            case RIGHT:
-                nextX = entityX + entityY;
-                break;
-            default:
-                break;
-        }
-
-        // Update the position if the movement in the current direction is possible
-        if (!checkCollisionWithMap(getMap(), nextX, nextY)) {
-            entityX = nextX;
-            entityY = nextY;
-        }
-
-        setLocation(entityX, entityY);
-    }
-
     public abstract void run();
 
-
     public abstract char[][] getMap();
-
 }

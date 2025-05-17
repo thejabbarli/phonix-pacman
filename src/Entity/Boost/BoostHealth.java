@@ -2,26 +2,15 @@ package Entity.Boost;
 
 import Entity.Player;
 import Entity.ghosts.Ghost;
-import Map.Map;
-
-import javax.swing.*;
-import java.awt.*;
+import map.Map;
 
 public class BoostHealth extends Boost {
     private static final int MAX_PART_LIFE = 4;
     private int partLife;
 
-    public BoostHealth(int x, int y, int size, Map map, String imagePath) {
-        super(x, y, size, map, imagePath);
+    public BoostHealth(int row, int col, int tileSize, Map map) {
+        super(row, col, tileSize, map);
         this.partLife = 0;
-        initializeIcon(imagePath, size);
-    }
-
-    private void initializeIcon(String imagePath, int size) {
-        ImageIcon image = new ImageIcon(imagePath);
-        Image resizedImage = image.getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH);
-        setIcon(new ImageIcon(resizedImage));
-        setBounds(getX(), getY(), size, size);
     }
 
     @Override

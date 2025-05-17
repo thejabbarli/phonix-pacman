@@ -1,4 +1,4 @@
-package Map.Third;
+package map.Third;
 
 public class Situation {
     private int totalPoints;

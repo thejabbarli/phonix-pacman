@@ -1,4 +1,4 @@
-package Map;
+package map;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

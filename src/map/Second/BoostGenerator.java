@@ -1,10 +1,10 @@
-package Map.Second;
+package map.Second;
 
 
 import Entity.Boost.*;
 import Entity.ghosts.Ghost;
-import Main.GamePanel;
-import Map.Map;
+import view.GamePanel;
+import map.Map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,34 +46,24 @@ public class BoostGenerator {
     }
 
     private void createRandomBoost() {
-        // Get ghost position using getters
-        int ghostX = ghost.getGhostX();
-        int ghostY = ghost.getGhostY();
+        int ghostRow = ghost.getRow();
+        int ghostCol = ghost.getCol();
 
         Boost boost = null;
         switch (random.nextInt(5)) {
-            case 0:
-                boost = new BoostHealth(ghostX, ghostY, map.getTileSize(), map, "res/boosts/boostHealth.png");
-                break;
-            case 1:
-                boost = new BoostThunder(ghostX, ghostY, map.getTileSize(), map, "res/boosts/boostThunder.png");
-                break;
-            case 2:
-                boost = new BoostShield(ghostX, ghostY, map.getTileSize(), map, "res/boosts/boostShield.png");
-                break;
-            case 3:
-                boost = new BoostPoison(ghostX, ghostY, map.getTileSize(), map, "res/boosts/boostPoison.png");
-                break;
-            case 4:
-                boost = new BoostIce(ghostX, ghostY, map.getTileSize(), map, "res/boosts/boostIce.png");
-                break;
+            case 0 -> boost = new BoostHealth(ghostRow, ghostCol, map.getTileSize(), map);
+            case 1 -> boost = new BoostThunder(ghostRow, ghostCol, map.getTileSize(), map);
+            case 2 -> boost = new BoostShield(ghostRow, ghostCol, map.getTileSize(), map);
+            case 3 -> boost = new BoostPoison(ghostRow, ghostCol, map.getTileSize(), map);
+            case 4 -> boost = new BoostIce(ghostRow, ghostCol, map.getTileSize(), map);
         }
 
         if (boost != null) {
             boosts.add(boost);
-            gamePanel.addBoost(boost); // Add boost to the game panel
+            gamePanel.addBoost(boost);
         }
     }
+
 
     public List<Boost> getBoosts() {
         return boosts;

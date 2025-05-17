@@ -2,33 +2,28 @@ package Entity.Boost;
 
 import Entity.Player;
 import Entity.ghosts.Ghost;
-import Map.Map;
+import map.Map;
 
-import javax.swing.*;
+public abstract class Boost {
+    protected final int row;
+    protected final int col;
+    protected final int tileSize;
+    protected final Map map;
 
-public abstract class Boost extends JLabel {
-    protected int x, y, size;
-    protected Map map;
-    private ImageIcon icon;
-
-    public Boost(int x, int y, int size, Map map, String imagePath) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
+    public Boost(int row, int col, int tileSize, Map map) {
+        this.row = row;
+        this.col = col;
+        this.tileSize = tileSize;
         this.map = map;
-        this.icon = new ImageIcon(imagePath);
-        setBounds(x, y, size, size);
-        setIcon(icon);
     }
 
-    public int getX() {
-        return x;
+    public int getRow() {
+        return row;
     }
 
-    public int getY() {
-        return y;
+    public int getCol() {
+        return col;
     }
 
     public abstract void boostTaken(Player player, Ghost ghost);
-
 }
